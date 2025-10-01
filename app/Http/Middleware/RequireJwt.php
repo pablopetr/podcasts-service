@@ -18,6 +18,7 @@ class RequireJwt
         try {
             $required = $audiences ?: null;
             $res = $this->verifier->validate($token, $required);
+
             $request->attributes->set('jwt_claims', $res['claims']);
         } catch (\Throwable $e) {
             return response()->json(['message'=>'Invalid token'], 401);
