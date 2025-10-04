@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'jwt' =>  RequireJwt::class,
+            'jwt' => RequireJwt::class,
             'premium' => RequiresPremium::class,
         ]);
     })

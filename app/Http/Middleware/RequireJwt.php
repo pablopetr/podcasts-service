@@ -13,7 +13,9 @@ class RequireJwt
     public function handle(Request $request, Closure $next, ...$audiences)
     {
         $token = $request->bearerToken();
-        if (!$token) return response()->json(['message'=>'Missing bearer token'], 401);
+        if (! $token) {
+            return response()->json(['message' => 'Missing bearer token'], 401);
+        }
 
         try {
             $required = $audiences ?: null;
@@ -21,7 +23,7 @@ class RequireJwt
 
             $request->attributes->set('jwt_claims', $res['claims']);
         } catch (\Throwable $e) {
-            return response()->json(['message'=>'Invalid token'], 401);
+            return response()->json(['message' => 'Invalid token'], 401);
         }
 
         return $next($request);

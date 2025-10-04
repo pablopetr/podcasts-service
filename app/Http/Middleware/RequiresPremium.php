@@ -17,7 +17,7 @@ class RequiresPremium
     {
         $claims = $request->attributes->get('jwt_claims');
 
-        if(!$claims) {
+        if (! $claims) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
@@ -25,7 +25,7 @@ class RequiresPremium
             ($claims['membership'] ?? null)
             : ($claims->membership ?? null);
 
-        if($membership !== 'premium') {
+        if ($membership !== 'premium') {
             return response()->json(['message' => 'Premium membership required'], 403);
         }
 

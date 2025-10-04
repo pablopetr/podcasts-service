@@ -23,7 +23,7 @@ class EpisodeFactory extends Factory
             'slug' => fake()->unique()->slug(),
             'description' => fake()->paragraphs(3, true),
             'duration_sec' => fake()->numberBetween(300, 7200), // Duration between 5 minutes and 2 hours
-            'audio_url' => fake()->url() . '/audio/' . fake()->uuid() . '.mp3',
+            'audio_url' => fake()->url().'/audio/'.fake()->uuid().'.mp3',
             'published_at' => fake()->dateTimeBetween('-1 years', 'now'),
         ];
     }

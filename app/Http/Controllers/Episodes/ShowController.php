@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Episodes;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EpisodeResource;
 use App\Models\Episode;
-use App\Models\Show;
-use Illuminate\Http\Request;
 
 class ShowController extends Controller
 {
