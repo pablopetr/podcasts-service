@@ -3,25 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Episode;
-use Illuminate\Http\Request;
+use App\Models\Show;
+use Illuminate\Http\JsonResponse;
 
 class EpisodeController extends Controller
 {
-    public function index()
+    public function index(Show $show): JsonResponse
     {
-        $episodes = Episode::with('show:id,title,slug')
+        $episodes = $show->episodes()
             ->orderBy('published_at', 'desc')
             ->paginate(10);
 
         return response()->json($episodes);
     }
 
-    public function show($slug)
+    public function show(Episode $episode): JsonResponse
     {
-        $episode = Episode::with('show:id,title,slug')
-            ->where('slug', $slug)
-            ->firstOrFail();
-
         return response()->json($episode);
     }
 }
