@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\RequireJwt;
+use App\Http\Middleware\RequireScope;
 use App\Http\Middleware\RequiresPremium;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'jwt' => RequireJwt::class,
             'premium' => RequiresPremium::class,
+            'requireScope' => RequireScope::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
