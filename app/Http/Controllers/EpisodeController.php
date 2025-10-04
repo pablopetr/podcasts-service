@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EpisodeCollection;
+use App\Http\Resources\EpisodeResource;
 use App\Models\Episode;
 use App\Models\Show;
-use Illuminate\Http\JsonResponse;
 
 class EpisodeController extends Controller
 {
-    public function index(Show $show): JsonResponse
+    public function index(Show $show): EpisodeCollection
     {
         $episodes = $show->episodes()
             ->orderBy('published_at', 'desc')
             ->paginate(10);
 
-        return response()->json($episodes);
+        return new EpisodeCollection($episodes);
     }
 
-    public function show(Episode $episode): JsonResponse
+    public function show(Episode $episode): EpisodeResource
     {
-        return response()->json($episode);
+        return new EpisodeResource($episode);
     }
 }
