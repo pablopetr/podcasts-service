@@ -21,6 +21,10 @@ class Episode extends Model
         'published_at',
     ];
 
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+
     public function show(): BelongsTo
     {
         return $this->belongsTo(Show::class);

@@ -13,9 +13,20 @@ Route::middleware(['jwt:podcasts', 'premium'])->group(function () {
 Route::prefix('/admin')
     ->middleware(['jwt:podcasts', 'requireScope:admin,podcasts:write'])
     ->group(function () {
-        Route::get('/shows', App\Http\Controllers\Admin\Shows\IndexController::class);
-        Route::get('/shows/{show:slug}', App\Http\Controllers\Admin\Shows\ShowController::class);
-        Route::post('/shows', App\Http\Controllers\Admin\Shows\StoreController::class);
-        Route::put('/shows/{show:slug}', App\Http\Controllers\Admin\Shows\UpdateController::class);
-        Route::delete('/shows/{show:slug}', App\Http\Controllers\Admin\Shows\DestroyController::class);
+        Route::group(['prefix' => '/shows'], function () {
+            Route::get('/', App\Http\Controllers\Admin\Shows\IndexController::class);
+            Route::get('/{show:slug}', App\Http\Controllers\Admin\Shows\ShowController::class);
+            Route::post('/', App\Http\Controllers\Admin\Shows\StoreController::class);
+            Route::put('/{show:slug}', App\Http\Controllers\Admin\Shows\UpdateController::class);
+            Route::delete('/{show:slug}', App\Http\Controllers\Admin\Shows\DestroyController::class);
+        });
+
+        Route::get('/{show:slug}/episodes', App\Http\Controllers\Admin\Episodes\IndexController::class);
+
+        Route::group(['prefix' => '/episodes'], function () {
+            Route::post('/', App\Http\Controllers\Admin\Episodes\StoreController::class);
+            Route::get('{episode:slug}', App\Http\Controllers\Admin\Episodes\ShowController::class);
+            Route::put('{episode:slug}', App\Http\Controllers\Admin\Episodes\UpdateController::class);
+            Route::delete('{episode:slug}', App\Http\Controllers\Admin\Episodes\DestroyController::class);
+        });
     });
