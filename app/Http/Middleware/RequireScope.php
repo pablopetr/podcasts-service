@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class RequireScope
 {
@@ -20,16 +19,16 @@ class RequireScope
 
         if (is_string($raw)) {
             $raw = preg_split('/[\s,]+/', trim($raw)) ?: [];
-        } elseif (!is_array($raw)) {
+        } elseif (! is_array($raw)) {
             $raw = [];
         }
 
-        $granted = collect($raw)->map(fn($s) => strtolower((string) $s));
+        $granted = collect($raw)->map(fn ($s) => strtolower((string) $s));
 
         foreach ($required as $need) {
-            if (!$granted->contains(strtolower($need))) {
+            if (! $granted->contains(strtolower($need))) {
                 return response()->json([
-                    'message'  => 'insufficient_scope',
+                    'message' => 'insufficient_scope',
                     'required' => array_values($required),
                 ], 403);
             }

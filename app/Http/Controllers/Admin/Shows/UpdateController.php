@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Shows\UpdateShowRequest;
 use App\Http\Resources\ShowResource;
 use App\Models\Show;
-use Illuminate\Http\Request;
 
 class UpdateController extends Controller
 {

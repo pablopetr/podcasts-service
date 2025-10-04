@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Episodes\UpdateEpisodeRequest;
 use App\Http\Resources\EpisodeResource;
 use App\Models\Episode;
-use Illuminate\Http\Request;
 
 class UpdateController extends Controller
 {

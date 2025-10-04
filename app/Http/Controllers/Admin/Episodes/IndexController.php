@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Admin\Episodes;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EpisodeCollection;
-use App\Models\Episode;
 use App\Models\Show;
-use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {

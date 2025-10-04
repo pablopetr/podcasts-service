@@ -1,11 +1,10 @@
 <?php
 
-
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 use App\Models\Show;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 uses(RefreshDatabase::class);
 
@@ -36,7 +35,7 @@ function jwksFromRsa(string $kid, string $nBin, string $eBin): array
             'alg' => 'RS256',
             'n' => b64u($nBin),
             'e' => b64u($eBin),
-        ]]
+        ]],
     ];
 }
 
@@ -44,9 +43,10 @@ function signJwtRS256(array $header, array $payload, string $privPem): string
 {
     $h = b64u(json_encode($header, JSON_UNESCAPED_SLASHES));
     $p = b64u(json_encode($payload, JSON_UNESCAPED_SLASHES));
-    $input = $h . '.' . $p;
+    $input = $h.'.'.$p;
     openssl_sign($input, $sig, $privPem, OPENSSL_ALGO_SHA256);
-    return $input . '.' . b64u($sig);
+
+    return $input.'.'.b64u($sig);
 }
 
 beforeEach(function () {
@@ -61,7 +61,7 @@ beforeEach(function () {
 
     [$privPem, $pubPem, $nBin, $eBin] = genRsaKeypair();
     $this->privPem = $privPem;
-    $this->kid = (string)Str::uuid();
+    $this->kid = (string) Str::uuid();
 
     $jwks = jwksFromRsa($this->kid, $nBin, $eBin);
     Http::fake([
@@ -97,7 +97,7 @@ it('creates a show with valid admin token (201)', function () {
         'description' => 'Descrição',
         'cover_url' => 'https://exemplo.com/capa.jpg',
     ], [
-        'Authorization' => 'Bearer ' . $token,
+        'Authorization' => 'Bearer '.$token,
         'Content-Type' => 'application/json',
     ])->assertCreated();
 
@@ -115,7 +115,7 @@ it('fails 401 when aud is wrong', function () {
     $this->postJson('/api/admin/shows', [
         'title' => 'Outro',
     ], [
-        'Authorization' => 'Bearer ' . $token,
+        'Authorization' => 'Bearer '.$token,
     ])->assertStatus(401)->assertJson(['message' => 'Invalid token']);
 });
 
@@ -127,7 +127,7 @@ it('fails 403 when scope is missing', function () {
     $this->postJson('/api/admin/shows', [
         'title' => 'No permission',
     ], [
-        'Authorization' => 'Bearer ' . $token,
+        'Authorization' => 'Bearer '.$token,
     ])->assertStatus(403)->assertJson(['message' => 'insufficient_scope']);
 });
 
@@ -137,6 +137,6 @@ it('fails 422 on validation error', function () {
     $this->postJson('/api/admin/shows', [
         'cover_url' => 'https://exemplo.com/capa.jpg',
     ], [
-        'Authorization' => 'Bearer ' . $token,
+        'Authorization' => 'Bearer '.$token,
     ])->assertStatus(422);
 });

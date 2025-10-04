@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\Shows;
 
 use App\Http\Controllers\Controller;
 use App\Models\Show;
-use Illuminate\Http\Request;
 
 class DestroyController extends Controller
 {
